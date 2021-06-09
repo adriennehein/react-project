@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import { render } from 'react-dom';
 import './App.css';
+// import Todolist from './components/Todolist';
 
-function App() {
+export default function App() {
+  const todos = [
+    { id: 1, text: "Wash dishes", done: false },
+    { id: 2, text: "Do laundry", done: false },
+    { id: 3, text: "Take shower", done: false }
+  ];
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Checklist</h1>
+      <Todolist todos={todos}/>
     </div>
   );
 }
 
-export default App;
+
+//object destructuring on props object: props > {todos}
+function Todolist({todos}) {
+  return (
+    <ul>
+      {todos.map(todo=> (
+        <li key={todo.id}>{todo.text}</li>
+  
+      ))}
+
+    </ul>
+  )
+}
