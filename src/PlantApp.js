@@ -10,24 +10,53 @@ const PlantApp = () => {
         <div>
             <h1>This is for plants</h1>
             <AddPlant setPlants={setPlants}/>
-            <PlantList plants={plants}/>
+            <PlantList plants={plants} setPlants={setPlants}/>
         </div>
     )
 }
 
-const PlantList = ({plants}) => {
+const PlantList = ({plants, setPlants}) => {
     return (
         <ul>
             {plants.map((plant) => (
-                <li key={plant.key}>{plant.name}</li>
+                <li 
+                    key={plant.key}
+                >
+                    {plant.name}
+                    <Delete plant={plant} setPlants={setPlants}/>
+                </li>
             ))}
         </ul>
+    )
+}
+
+const Delete = ({plant, setPlants}) => {
+    const handleDelete = () => {
+        const confirmed = window.confirm('Delete?');
+        if (confirmed) {
+            setPlants((prevPlants) => {
+                return prevPlants.filter((p) => p.id !== plant.id)
+            })
+        }
+    }
+    return (
+        <span
+            onClick={handleDelete}
+            style={{
+                marginLeft: 10,
+                color: 'orange',
+                fontWeight: 900,
+            }}
+        >
+            Delete
+        </span>
     )
 }
 
 const AddPlant = ({setPlants}) => {
     const nameInput = React.useRef();
     const handleSubmit = (e) => {
+
         e.preventDefault();
         const name = e.target.elements.plantName.value;
         const newPlant = {
